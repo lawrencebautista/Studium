@@ -12,8 +12,7 @@ public class SubjectReaderDbHelper extends SQLiteOpenHelper {
 	private static final String COMMA_SEP = ",";
 	private static final String SQL_CREATE_ENTRIES =
 	    "CREATE TABLE " + SubjectReaderContract.SubjectEntry.TABLE_NAME + " (" +
-	    SubjectReaderContract.SubjectEntry._ID + " INTEGER PRIMARY KEY," +
-	    SubjectReaderContract.SubjectEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
+	    SubjectReaderContract.SubjectEntry._ID + " INTEGER PRIMARY KEY" + COMMA_SEP + 
 	    SubjectReaderContract.SubjectEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
 	    " )";
 

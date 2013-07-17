@@ -1,14 +1,20 @@
 package com.gak2.studium;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
+
+import com.gak2.studium.SubjectReaderContract.SubjectEntry;
 
 
 public class MainActivity extends Activity {
@@ -17,18 +23,50 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-	//	SubjectReaderDbHelper subjectHelper = new SubjectReaderDbHelper(this);
-	//	SQLiteDatabase db = subjectHelper.getReadableDatabase();
-	//	db.close();
+		SubjectReaderDbHelper subjectHelper = new SubjectReaderDbHelper(this);
+		SQLiteDatabase db = subjectHelper.getWritableDatabase();
 		
 		// Test array of strings
 		String[] subjectArray = {"History 3", "Computational Molecular Evolution", "Cryptography"};
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, subjectArray);
+		ContentValues values;
+		for (int i = 0; i < subjectArray.length; i++) {
+			values = new ContentValues();
+			values.put(SubjectEntry.COLUMN_NAME_TITLE, subjectArray[i]);
+		
+			long newRowId;
+			newRowId = db.insert(SubjectEntry.TABLE_NAME, null, values);
+		}		
+		db.close();
+		
+
+		// Display the items in the database
+		db = subjectHelper.getReadableDatabase();
+		String[] projection = {
+				SubjectEntry._ID,
+				SubjectEntry.COLUMN_NAME_TITLE
+		};
+		
+		Cursor cursor = db.query(SubjectEntry.TABLE_NAME, projection, null, null, null, null, null);
+		cursor.moveToFirst();
+		
+		String[] fromColumns =  {
+				SubjectEntry.COLUMN_NAME_TITLE};
+		
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+				this,
+				android.R.layout.simple_list_item_1,
+				cursor,
+				fromColumns,
+				new int[] {android.R.id.text1},
+				0);
+		
+		//ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, subjectArray);
 		
 		GridView gridview= (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(adapter);
 		
+		// We get the specific grid item by passing the position
 		gridview.setOnItemClickListener(subjectClickedHandler);
 	}
 
@@ -40,8 +78,9 @@ public class MainActivity extends Activity {
 	}
 	
 	private OnItemClickListener subjectClickedHandler = new OnItemClickListener() {
-		public void onItemClick(AdapterView parent, View v, int position, long id) {
-			// Do something in response to the click
+		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
+			
 		}
 	};
 	
