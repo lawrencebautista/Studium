@@ -18,7 +18,7 @@ import com.gak2.studium.SubjectReaderContract.SubjectEntry;
 
 
 public class MainActivity extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,6 +50,8 @@ public class MainActivity extends Activity {
 		Cursor cursor = db.query(SubjectEntry.TABLE_NAME, projection, null, null, null, null, null);
 		cursor.moveToFirst();
 		
+		db.close();
+		
 		String[] fromColumns =  {
 				SubjectEntry.COLUMN_NAME_TITLE};
 		
@@ -60,13 +62,11 @@ public class MainActivity extends Activity {
 				fromColumns,
 				new int[] {android.R.id.text1},
 				0);
-		
-		//ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, subjectArray);
-		
+				
 		GridView gridview= (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(adapter);
 		
-		// We get the specific grid item by passing the position
+		// Remember: We get the specific grid item by passing the position
 		gridview.setOnItemClickListener(subjectClickedHandler);
 	}
 
@@ -79,10 +79,21 @@ public class MainActivity extends Activity {
 	
 	private OnItemClickListener subjectClickedHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			Toast.makeText(MainActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
 			
+			SubjectReaderDbHelper subjectHelper = new SubjectReaderDbHelper(MainActivity.this);
+			SQLiteDatabase db = subjectHelper.getWritableDatabase();
+			
+			// Get the subject ID to be deleted
+			//Cursor c = ((SimpleCursorAdapter) parent.getAdapter()).getCursor();
+		//	c.moveToPosition(position);
+	
+			
+			// Delete it from the database
+			db.delete(SubjectEntry.TABLE_NAME, SubjectEntry._ID, new String[] {"" + id});
+			((SimpleCursorAdapter)parent.getAdapter()).notifyDataSetChanged();
 		}
 	};
+	
 	
 	public void createSubject(View view) {
 		;

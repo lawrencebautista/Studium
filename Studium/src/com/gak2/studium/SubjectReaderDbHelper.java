@@ -28,7 +28,6 @@ public class SubjectReaderDbHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
 		db.execSQL(SQL_CREATE_ENTRIES);
 
 	}
