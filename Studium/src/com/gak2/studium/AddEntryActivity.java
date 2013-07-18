@@ -1,29 +1,20 @@
 package com.gak2.studium;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 
-public class SubjectActivity extends Activity {
+public class AddEntryActivity extends Activity {
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_subject);
+		setContentView(R.layout.activity_add_entry);
 		// Show the Up button in the action bar.
 		setupActionBar();
-
-		
-		Intent intent = getIntent();
-		long subjectId = intent.getLongExtra(MainActivity.EXTRA_MESSAGE, 0);
-
-		setTitle("Subject #" + subjectId);
 	}
 
 	/**
@@ -34,11 +25,17 @@ public class SubjectActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
+	
+	public void addStatement(View view) {
+		//TODO implement this to update the database. Will need to create a new table and make additional SQLiteOpener class as well as  a contract
+		finish();
+		return;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.subject, menu);
+		getMenuInflater().inflate(R.menu.add_entry, menu);
 		return true;
 	}
 
@@ -55,12 +52,7 @@ public class SubjectActivity extends Activity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
-		case R.id.menu_addstatement:
-			Intent intent = new Intent(this, AddEntryActivity.class);
-			startActivity(intent);
-			return true;
 		}
-		
 		return super.onOptionsItemSelected(item);
 	}
 
