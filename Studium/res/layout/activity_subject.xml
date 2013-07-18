@@ -7,16 +7,12 @@
     android:orientation="vertical"
 
     tools:context=".SubjectActivity" >
-
+    <ListView
+        android:id="@+id/entry_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    />
     
-    <!-- Should probably put these in the action bar instead -->
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/review" />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/test" />
+    
 
 </LinearLayout>

@@ -6,12 +6,16 @@
     <string name="add_subject_text">Create a new subject here</string>
     <string name="add_subject_button_text">Create</string>
     <string name="title_activity_subject">Subject Activity</string>
-    <string name="menu_addstatement">Add a statement</string>
+    <string name="menu_add_entry">Add an entry</string>
     <string name="review">Review</string>
     <string name="test">Test</string>
     <string name="title_activity_add_entry">AddEntryActivity</string>
     
-    <string name="add_statement_text">Add your statement here</string>
-    <string name="add_statement_button">Add</string>
+    <string name="add_entry_text">Add your entry here</string>
+    <string name="add_response_text">(Optional) Add your response here</string>
+    <string name="add_entry_button">Add</string>
+    <string name="add_entry_error">There\'s no entry to add!</string>
+    
+
 
 </resources>

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,12 +17,15 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
 
+import com.gak2.studium.EntryReaderContract.StudyEntry;
 import com.gak2.studium.SubjectReaderContract.SubjectEntry;
 
 
 public class MainActivity extends Activity {
-	public static final String EXTRA_MESSAGE = "com.gak2.studium.SUBJECT_CHOICE";
-	private static final String TAG = "MainActivity";
+	public static final String EXTRA_MESSAGE = "com.gak2.studium.";
+	public static final String EXTRA_SUBJ_ID = EXTRA_MESSAGE + "SUBJ_ID";
+	public static final String EXTRA_SUBJ_NAME = EXTRA_MESSAGE + "SUBJ_NAME";
+	
 	
 	
 	@Override
@@ -78,7 +80,12 @@ public class MainActivity extends Activity {
 		// Start the subject Activity
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Intent intent = new Intent(MainActivity.this, SubjectActivity.class);
-			intent.putExtra(EXTRA_MESSAGE, id); // Pass it the id of the subject we're concerned with
+			Cursor c = ((SimpleCursorAdapter) parent.getAdapter()).getCursor();
+			c.moveToPosition(position);
+			String s = c.getString(1); // Gets the string, which is the second item in the cursor
+			
+			intent.putExtra(EXTRA_SUBJ_ID, id); // Pass it the id of the subject we're concerned with
+			intent.putExtra(EXTRA_SUBJ_NAME, s);
 			startActivity(intent);
 		}
 	};
@@ -94,15 +101,16 @@ public class MainActivity extends Activity {
 		        	SubjectReaderDbHelper subjectHelper = new SubjectReaderDbHelper(MainActivity.this);
 					SQLiteDatabase db = subjectHelper.getWritableDatabase();
 					
-					// Get the subject ID to be deleted
-					//Cursor c = ((SimpleCursorAdapter) parent.getAdapter()).getCursor();
-				//	c.moveToPosition(position);
-			
-					
 					// Delete it from the database
 					db.delete(SubjectEntry.TABLE_NAME, SubjectEntry._ID + "=?", new String[] {"" + id});
 					//((SimpleCursorAdapter)parent.getAdapter()).notifyDataSetChanged();
 					db.close();
+					
+					// Delete all the entries from the entry database
+					db = (new EntryReaderDbHelper(MainActivity.this)).getWritableDatabase();
+					db.delete(StudyEntry.TABLE_NAME, StudyEntry.COLUMN_NAME_SUBJ_ID + "=?", new String[] {"" + id});
+					db.close();
+					
 					((SimpleCursorAdapter)parent.getAdapter()).notifyDataSetChanged();
 					updateGrid();
 		        }
@@ -132,8 +140,7 @@ public class MainActivity extends Activity {
 			values = new ContentValues();
 			values.put(SubjectEntry.COLUMN_NAME_TITLE, newSubject);
 			
-			long newRowId;
-			newRowId = db.insert(SubjectEntry.TABLE_NAME, null, values);	
+			db.insert(SubjectEntry.TABLE_NAME, null, values);	
 			editText.setText("");
 			updateGrid();
 		}
