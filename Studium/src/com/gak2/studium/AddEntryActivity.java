@@ -41,8 +41,7 @@ public class AddEntryActivity extends Activity {
 	}
 	
 	
-	public void addStatement(View view) {
-		//TODO implement this to update the database. Will need to create a new table and make additional SQLiteOpener class as well as  a contract
+	public void addEntry(View view) {
 		
 		EntryReaderDbHelper entryHelper = new EntryReaderDbHelper(this);
 		SQLiteDatabase db;

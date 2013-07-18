@@ -13,6 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,9 +22,14 @@ import android.widget.SimpleCursorAdapter;
 import com.gak2.studium.EntryReaderContract.StudyEntry;
 
 public class SubjectActivity extends Activity {
-
-	public static final String EXTRA_SUBJ_ID = "com.gak2.studium.SUBJ_ID";
+	public static final String EXTRA_MESSAGE = "com.gak2.studium.";
+	public static final String EXTRA_SUBJ_ID = EXTRA_MESSAGE + "SUBJ_ID";
+	public static final String EXTRA_ENTRY_ID = EXTRA_MESSAGE + "ENTRY_ID";
+	public static final String EXTRA_SUBJ_NAME = EXTRA_MESSAGE + "SUBJ_NAME";
+	public static final String EXTRA_ENTRY = EXTRA_MESSAGE + "ENTRY";
+	public static final String EXTRA_RESPONSE = EXTRA_MESSAGE + "RESPONSE";
 	protected long subjectId;
+	protected String subjectName;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -36,7 +42,7 @@ public class SubjectActivity extends Activity {
 		// Get the subject this came from
 		Intent intent = getIntent();
 		subjectId = intent.getLongExtra(MainActivity.EXTRA_SUBJ_ID, 0);
-		String subjectName = intent.getStringExtra(MainActivity.EXTRA_SUBJ_NAME);
+		subjectName = intent.getStringExtra(MainActivity.EXTRA_SUBJ_NAME);
 
 		setTitle(subjectName);
 		
@@ -85,8 +91,27 @@ public class SubjectActivity extends Activity {
 		listview.setAdapter(adapter);
 		db.close();
 		
+		listview.setOnItemClickListener(entryClickedHandler);
 		listview.setOnItemLongClickListener(entryLongClickedHandler);
 	}
+	
+	private OnItemClickListener entryClickedHandler = new OnItemClickListener() {
+		// Edit the entry
+		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			Intent intent = new Intent(SubjectActivity.this, EditEntryActivity.class);
+			Cursor c = ((SimpleCursorAdapter) parent.getAdapter()).getCursor();
+			c.moveToPosition(position);
+			String s = c.getString(1); // Gets the string, which is the second item in the cursor
+			String entry = c.getString(5);
+			String response = c.getString(6);
+			
+			intent.putExtra(EXTRA_ENTRY_ID, id); // Pass it the id of the subject we're concerned with
+			intent.putExtra(EXTRA_SUBJ_NAME, s);
+			intent.putExtra(EXTRA_ENTRY, entry);
+			intent.putExtra(EXTRA_RESPONSE, response);
+			startActivity(intent);
+		}
+	};
 	
 	private OnItemLongClickListener entryLongClickedHandler = new OnItemLongClickListener() {
 		public boolean onItemLongClick(final AdapterView<?> parent, View v, int position, final long id) {
@@ -131,6 +156,7 @@ public class SubjectActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -143,10 +169,15 @@ public class SubjectActivity extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.menu_add_entry:
-			Intent intent = new Intent(this, AddEntryActivity.class);
+			intent = new Intent(this, AddEntryActivity.class);
 			intent.putExtra(EXTRA_SUBJ_ID, subjectId);
 			startActivity(intent);
 			return true;
+		case R.id.menu_quiz:
+			intent = new Intent(this, QuizActivity.class);
+			intent.putExtra(EXTRA_SUBJ_ID, subjectId);
+			intent.putExtra(EXTRA_SUBJ_NAME, subjectName);
+			startActivity(intent);
 		}
 		
 		return super.onOptionsItemSelected(item);

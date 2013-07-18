@@ -6,16 +6,24 @@
     <string name="add_subject_text">Create a new subject here</string>
     <string name="add_subject_button_text">Create</string>
     <string name="title_activity_subject">Subject Activity</string>
+    <string name="title_activity_add_entry">Add an Entry</string>
     <string name="menu_add_entry">Add an entry</string>
-    <string name="review">Review</string>
-    <string name="test">Test</string>
-    <string name="title_activity_add_entry">AddEntryActivity</string>
-    
-    <string name="add_entry_text">Add your entry here</string>
-    <string name="add_response_text">(Optional) Add your response here</string>
+    <string name="menu_quiz">Quiz!</string>
+    <string name="add_entry_text">Type your entry here</string>
+    <string name="add_response_text">(Optional) Type your response here</string>
     <string name="add_entry_button">Add</string>
     <string name="add_entry_error">There\'s no entry to add!</string>
-    
-
+    <string name="delete_entry_button">Delete</string>
+    <string name="edit_entry_text">Type your entry here</string>
+    <string name="edit_response_text">(Optional) Type your response here</string>
+    <string name="edit_entry_button">Update</string>
+    <string name="edit_entry_error">There\'s no entry!</string>
+    <string name="title_activity_quiz">Quiz Activity</string>
+    <string name="quiz_entry">Entry</string>
+    <string name="quiz_response">Response</string>
+    <string name="quiz_show_response_button">Show Response</string>
+    <string name="quiz_prev_button">Prev</string>
+    <string name="quiz_next_button">Next</string>
+    <string name="title_activity_edit_entry">Edit an Entry</string>
 
 </resources>

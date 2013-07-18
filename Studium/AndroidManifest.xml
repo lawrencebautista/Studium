@@ -26,6 +26,7 @@
         <activity
             android:name="com.gak2.studium.SubjectActivity"
             android:label="@string/title_activity_subject"
+            android:launchMode="singleTop"
             android:parentActivityName="com.gak2.studium.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,6 +35,22 @@
         <activity
             android:name="com.gak2.studium.AddEntryActivity"
             android:label="@string/title_activity_add_entry"
+            android:parentActivityName="com.gak2.studium.SubjectActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gak2.studium.SubjectActivity" />
+        </activity>
+        <activity
+            android:name="com.gak2.studium.QuizActivity"
+            android:label="@string/title_activity_quiz"
+            android:parentActivityName="com.gak2.studium.SubjectActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gak2.studium.SubjectActivity" />
+        </activity>
+        <activity
+            android:name="com.gak2.studium.EditEntryActivity"
+            android:label="@string/title_activity_edit_entry"
             android:parentActivityName="com.gak2.studium.SubjectActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

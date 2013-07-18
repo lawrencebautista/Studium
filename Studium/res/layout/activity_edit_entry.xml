@@ -7,24 +7,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AddEntryActivity" >
+    tools:context=".EditEntryActivity" >
     
     <EditText
-        android:id="@+id/add_entry_text"
+        android:id="@+id/edit_entry_text"
         android:inputType="textCapSentences"
         android:layout_width="fill_parent" 
 		android:layout_height="wrap_content" 
-		android:hint="@string/add_entry_text" />
+		android:hint="@string/edit_entry_text" />
     <EditText
-        android:id="@+id/add_response_text"
+        android:id="@+id/edit_response_text"
         android:inputType="textCapSentences"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/add_response_text" />
+        android:hint="@string/edit_response_text" />
     <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/add_entry_button"
-        android:onClick="addEntry"/>
+        android:text="@string/edit_entry_button"
+        android:onClick="editEntry"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/delete_entry_button"
+        android:onClick="deleteEntry"/>
 
 </LinearLayout>
