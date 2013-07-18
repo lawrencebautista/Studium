@@ -50,8 +50,8 @@ public class MainActivity extends Activity {
 		
 		
 		String[] fromColumns =  {
-				SubjectEntry._ID,
-				SubjectEntry.COLUMN_NAME_TITLE};
+				SubjectEntry.COLUMN_NAME_TITLE,
+				SubjectEntry._ID};
 		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
 				this,

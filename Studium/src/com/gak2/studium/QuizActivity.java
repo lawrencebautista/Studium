@@ -52,12 +52,17 @@ public class QuizActivity extends Activity {
 				StudyEntry.COLUMN_NAME_SUBJ_ID + "=?",
 				new String[] {"" + subjectId},
 				null, null, "RANDOM()");
-		cursor.moveToFirst();
-		TextView entryTextView = (TextView) findViewById(R.id.quiz_entry);
-		TextView responseTextView = (TextView) findViewById(R.id.quiz_response);
-		entryTextView.setText(cursor.getString(5));
-		responseTextView.setText(cursor.getString(6));
-		db.close();
+		if (cursor.moveToFirst()) {
+			TextView entryTextView = (TextView) findViewById(R.id.quiz_entry);
+			TextView responseTextView = (TextView) findViewById(R.id.quiz_response);
+			entryTextView.setText(cursor.getString(5));
+			responseTextView.setText(cursor.getString(6));
+			db.close();
+		}
+		else {
+			db.close();
+			finish();
+		}
 	}
 	
 	public void showResponse(View view) {
