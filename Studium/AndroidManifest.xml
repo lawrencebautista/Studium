@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -56,6 +56,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gak2.studium.SubjectActivity" />
         </activity>
+        
+        <receiver android:name="StudiumWidgetProvider" >
+      		<intent-filter>
+         	   <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+        	</intent-filter>
+        	<meta-data android:name="android.appwidget.provider"
+            		android:resource="@xml/widget_info" />
+    	</receiver>
     </application>
+    
+
 
 </manifest>
